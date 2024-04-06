@@ -8,7 +8,7 @@ def load_preprocess_model():
                         batch_size_seg=5,
                         batch_size_matting=1,
                         # device='cuda' if torch.cuda.is_available() else 'cpu',
-                        device='cuda',
+                        device='cpu',
                         seg_mask_size=640,  # Use 640 for Tracer B7 and 320 for U2Net
                         matting_mask_size=2048,
                         trimap_prob_threshold=231,
