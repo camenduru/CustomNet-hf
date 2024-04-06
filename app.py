@@ -194,7 +194,9 @@ def run_generation(sampler, input_image, x0, y0, x1, y1, polar, azimuth, text, s
     
     output_image = Image.fromarray(x_samples)
 
-    return output_image
+    x0, y0, x1, y1, image_location = adjust_location(x0, y0, x1, y1, input_image)
+
+    return x0, y0, x1, y1, image_location, output_image
 
 
 def load_example(input_image, x0, y0, x1, y1, polar, azimuth, prompt):
@@ -283,7 +285,7 @@ def main(args):
         # start.click(partial(run_generation, sampler, model, device), 
         start.click(partial(run_generation, sampler), 
                                 inputs=[input_image, x0, y0, x1, y1, polar, azimuth, prompt, seed], 
-                                outputs=output_image)
+                                outputs=[x0, y0, x1, y1, location_image, output_image])
                                 
 
     # demo.launch(server_name='0.0.0.0', share=False, server_port=args.port)
