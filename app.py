@@ -129,11 +129,12 @@ def prepare_data(device, input_image, x0, y0, x1, y1, polar, azimuth, text):
     return batch
 
 
-@spaces.GPU(enable_queue=True)
+@spaces.GPU(enable_queue=True, duration=180)
 def run_generation(sampler, model, device, input_image, x0, y0, x1, y1, polar, azimuth, text, seed):
     seed_everything(seed)
     batch = prepare_data(device, input_image, x0, y0, x1, y1, polar, azimuth, text)
     model = model.to(device)
+    sampler = DDIMSampler(model, device=device)
 
     c = model.get_learned_conditioning(batch["image_cond"])
     c = torch.cat([c, batch["T"]], dim=-1)
@@ -194,13 +195,13 @@ def main(args):
     config = OmegaConf.load("configs/config_customnet.yaml") 
     model = instantiate_from_config(config.model)
 
-    model_path='./customnet_v1.pt?download=true'
-    if not os.path.exists(model_path):
-        os.system(f'wget https://huggingface.co/TencentARC/CustomNet/resolve/main/customnet_v1.pt?download=true -P .')
+    # model_path='./customnet_v1.pt?download=true'
+    # if not os.path.exists(model_path):
+    #     os.system(f'wget https://huggingface.co/TencentARC/CustomNet/resolve/main/customnet_v1.pt?download=true -P .')
 
-    ckpt = torch.load(model_path, map_location="cpu")
-    model.load_state_dict(ckpt)
-    del ckpt
+    # ckpt = torch.load(model_path, map_location="cpu")
+    # model.load_state_dict(ckpt)
+    # del ckpt
     model = model.to(device)
     sampler = DDIMSampler(model, device=device)
 
