@@ -185,7 +185,7 @@ def load_example(input_image, x0, y0, x1, y1, polar, azimuth, prompt):
     # print(type(polar))
     return input_image, x0, y0, x1, y1, polar, azimuth, prompt
 
-@spaces.GPU
+# @spaces.GPU
 @torch.no_grad()
 def main(args):
     # load model
