@@ -134,6 +134,7 @@ def prepare_data(device, input_image, x0, y0, x1, y1, polar, azimuth, text):
 def run_generation(sampler, model, device, input_image, x0, y0, x1, y1, polar, azimuth, text, seed):
     seed_everything(seed)
     batch = prepare_data(device, input_image, x0, y0, x1, y1, polar, azimuth, text)
+    model = model.to(device)
 
     c = model.get_learned_conditioning(batch["image_cond"])
     c = torch.cat([c, batch["T"]], dim=-1)
@@ -185,7 +186,7 @@ def load_example(input_image, x0, y0, x1, y1, polar, azimuth, prompt):
     # print(type(polar))
     return input_image, x0, y0, x1, y1, polar, azimuth, prompt
 
-@spaces.GPU
+
 @torch.no_grad()
 def main(args):
     # load model
