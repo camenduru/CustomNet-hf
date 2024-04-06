@@ -130,7 +130,6 @@ def prepare_data(device, input_image, x0, y0, x1, y1, polar, azimuth, text):
 
 
 @spaces.GPU(enable_queue=True)
-@torch.no_grad()
 def run_generation(sampler, model, device, input_image, x0, y0, x1, y1, polar, azimuth, text, seed):
     seed_everything(seed)
     batch = prepare_data(device, input_image, x0, y0, x1, y1, polar, azimuth, text)
