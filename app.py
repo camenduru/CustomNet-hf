@@ -195,12 +195,12 @@ def main(args):
     config = OmegaConf.load("configs/config_customnet.yaml") 
     model = instantiate_from_config(config.model)
 
-    # model_path='./customnet_v1.pt?download=true'
-    # if not os.path.exists(model_path):
-    #     os.system(f'wget https://huggingface.co/TencentARC/CustomNet/resolve/main/customnet_v1.pt?download=true -P .')
-    # ckpt = torch.load(model_path, map_location="cpu")
-    # model.load_state_dict(ckpt)
-    # del ckpt
+    model_path='./customnet_v1.pt?download=true'
+    if not os.path.exists(model_path):
+        os.system(f'wget https://huggingface.co/TencentARC/CustomNet/resolve/main/customnet_v1.pt?download=true -P .')
+    ckpt = torch.load(model_path, map_location="cpu")
+    model.load_state_dict(ckpt)
+    del ckpt
     
     model = model.to(device)
     sampler = None
