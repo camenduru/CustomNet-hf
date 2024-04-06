@@ -1,14 +1,17 @@
 # --extra-index-url https://download.pytorch.org/whl/cu113
 # torch==1.12.1
 # torchvision==0.13.1
+# pytorch-lightning==1.4.2
+# gradio==3.37.0
 torch
 torchvision
+pytorch-lightning
+gradio
 albumentations==0.4.3
 opencv-python
 pudb==2019.2
 imageio==2.9.0
 imageio-ffmpeg==0.4.2
-pytorch-lightning==1.4.2
 omegaconf==2.1.1
 test-tube>=0.7.5
 streamlit>=0.73.1
@@ -27,7 +30,6 @@ lovely-numpy>=0.2.8
 lovely-tensors>=0.1.14
 plotly==5.13.1
 Pillow==9.5.0
-gradio==3.37.0
 ultralytics==8.0.120
 -e git+https://github.com/CompVis/taming-transformers.git@master#egg=taming-transformers
 -e git+https://github.com/openai/CLIP.git@main#egg=clip
