@@ -1,5 +1,5 @@
 from ldm.util import create_carvekit_interface, load_and_preprocess
-import space
+import spaces
 
 @spaces.GPU
 def load_preprocess_model():
