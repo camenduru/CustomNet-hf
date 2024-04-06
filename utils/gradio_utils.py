@@ -1,9 +1,12 @@
 from ldm.util import create_carvekit_interface, load_and_preprocess
+import space
 
+@spaces.GPU
 def load_preprocess_model():
     carvekit = create_carvekit_interface()
     return carvekit
-
+    
+@spaces.GPU
 def preprocess_image(models, input_im):
     '''
     :param input_im (PIL Image).
