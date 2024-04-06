@@ -64,6 +64,22 @@ If you have any questions, please feel free to reach me out at <b>yuanzy22@mails
 # prompt = None
 negtive_prompt = ""
 
+# load model
+device = torch.device("cuda")
+preprocess_model = load_preprocess_model()
+config = OmegaConf.load("configs/config_customnet.yaml") 
+model = instantiate_from_config(config.model)
+
+model_path='./customnet_v1.pt?download=true'
+if not os.path.exists(model_path):
+    os.system(f'wget https://huggingface.co/TencentARC/CustomNet/resolve/main/customnet_v1.pt?download=true -P .')
+ckpt = torch.load(model_path, map_location="cpu")
+model.load_state_dict(ckpt)
+del ckpt
+
+model = model.to(device)
+sampler = None
+
 
 def send_input_to_concat(input_image):
     W, H = input_image.size
@@ -130,10 +146,11 @@ def prepare_data(device, input_image, x0, y0, x1, y1, polar, azimuth, text):
 
 
 @spaces.GPU(enable_queue=True, duration=180)
-def run_generation(sampler, model, device, input_image, x0, y0, x1, y1, polar, azimuth, text, seed):
+# def run_generation(sampler, model, device, input_image, x0, y0, x1, y1, polar, azimuth, text, seed):
+def run_generation(sampler, input_image, x0, y0, x1, y1, polar, azimuth, text, seed):
     seed_everything(seed)
     batch = prepare_data(device, input_image, x0, y0, x1, y1, polar, azimuth, text)
-    model = model.to(device)
+    # model = model.to(device)
     sampler = DDIMSampler(model, device=device)
 
     c = model.get_learned_conditioning(batch["image_cond"])
@@ -189,22 +206,6 @@ def load_example(input_image, x0, y0, x1, y1, polar, azimuth, prompt):
 
 @torch.no_grad()
 def main(args):
-    # load model
-    device = torch.device("cuda")
-    preprocess_model = load_preprocess_model()
-    config = OmegaConf.load("configs/config_customnet.yaml") 
-    model = instantiate_from_config(config.model)
-
-    model_path='./customnet_v1.pt?download=true'
-    if not os.path.exists(model_path):
-        os.system(f'wget https://huggingface.co/TencentARC/CustomNet/resolve/main/customnet_v1.pt?download=true -P .')
-    ckpt = torch.load(model_path, map_location="cpu")
-    model.load_state_dict(ckpt)
-    del ckpt
-    
-    model = model.to(device)
-    sampler = None
-
     # load demo
     demo = gr.Blocks()
     with demo:
@@ -279,7 +280,8 @@ def main(args):
                                 inputs=[x0, y0, x1, y1, input_image], 
                                 outputs=[x0, y0, x1, y1, location_image])
 
-        start.click(partial(run_generation, sampler, model, device), 
+        # start.click(partial(run_generation, sampler, model, device), 
+        start.click(partial(run_generation, sampler), 
                                 inputs=[input_image, x0, y0, x1, y1, polar, azimuth, prompt, seed], 
                                 outputs=output_image)
                                 
