@@ -1,6 +1,5 @@
 from ldm.util import load_and_preprocess
 from carvekit.api.high import HiInterface
-import spaces
 
 
 def load_preprocess_model():
@@ -17,7 +16,6 @@ def load_preprocess_model():
                         fp16=False)
     return carvekit
     
-@spaces.GPU
 def preprocess_image(models, input_im):
     '''
     :param input_im (PIL Image).
