@@ -290,7 +290,7 @@ def main(args):
 
     # demo.launch(server_name='0.0.0.0', share=False, server_port=args.port)
     # demo.queue(concurrency_count=1, max_size=10)
-    demo.queue().launch()
+    demo.queue().launch(share=True)
     
 
 
