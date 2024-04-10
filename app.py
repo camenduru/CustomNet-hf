@@ -1,4 +1,3 @@
-import spaces
 import argparse
 import os
 import tempfile
@@ -113,7 +112,6 @@ def adjust_location(x0, y0, x1, y1, input_image):
     draw.rectangle([(x0,y0),(x1,y1)], outline="red", width=5)
     return x_0, y_0, x_1, y_1, concat_img
 
-@spaces.GPU
 def prepare_data(device, input_image, x0, y0, x1, y1, polar, azimuth, text):
     if input_image.size[0] != 256 or input_image.size[1] != 256:
         input_image = input_image.resize((256, 256))
