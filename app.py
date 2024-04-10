@@ -142,8 +142,6 @@ def prepare_data(device, input_image, x0, y0, x1, y1, polar, azimuth, text):
             }
     return batch
 
-
-@spaces.GPU(enable_queue=True, duration=180)
 # def run_generation(sampler, model, device, input_image, x0, y0, x1, y1, polar, azimuth, text, seed):
 def run_generation(sampler, input_image, x0, y0, x1, y1, polar, azimuth, text, seed):
     seed_everything(seed)
